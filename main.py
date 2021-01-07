@@ -112,7 +112,6 @@ def main():
             # Break
             break
 
-        # TODO: Present the user their choices
         print(CHOICES)
 
 
@@ -195,6 +194,12 @@ def main():
 
         elif user_choice == "q":
             done = True
+
+        # HUNGER
+
+        if user_choice not in ["a","e"]:
+            hunger += random.randrange(5, 13)
+
 
         time.sleep(1.5)
 
