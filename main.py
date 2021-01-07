@@ -26,20 +26,49 @@ REACH THE END BEFORE THE MAN GON GETCHU.
 ----
 """
 
+WIN = """
+YOU PRESSED THE BUTTON TO OPEN THE GATE.
+THIS ISN'T THE FIRST TIME YOU'VE DONE THIS.
+YOU CAN TIME IT PERFECTLY SO THAT YOU
+SLIDE THE CAR IN AS THE GATES CLOSE.
+
+YOU KNOW YOU DID THE RIGHT THING.
+THE GOVERNMENT WOULD HAVE TORN THR CAR APART,
+ANALYSING IT, TESTING IT, THEN DESTROYING IT.
+
+THEY DON'T KNOW ITS SECRETS...
+THAT IT HOLDS THE KEY TO DIFFERENT WORLDS.
+
+AS YOU STEP OUT OF THE VEHICLE, FIDO RUNES
+UP TO YOU.
+"THANK YOU FOR SAVING ME," HE SAYS.
+
+AS YOU TAKE A COUPLE OF STEPS AWAY FROM THE CAR, 
+IT MAKES A STRANGE NOISE.
+
+BEFORE YOUR EYES, IT SHIFTS ITS SHAPES.
+YOU'VE SEEN IT BEFORE, BUT ONLY ON TV.
+
+"BUMBLEBEE...???" 
+
+--- GAME OVER---
+"""
+
+
 CHOICES = """
     ---
-    A. Eat tofu
+    A. Eat a piece of tofu
     B. Moderate speed 
     C. Speed ahead at full throttle
-    D. Stop at gas station
+    D. Stop at the gas station (NO FOOD)
     E. Status Check
     Q. QUIT
     ___
     """
 
 
-def intro():
-    for char in textwrap.dedent(INTRODUCTION):
+def type_text_output(string):
+    for char in textwrap.dedent(string):
         time.sleep(0.05)
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -47,24 +76,41 @@ def intro():
     time.sleep(1)
 
 def main():
-    #intro()
+    #type_text_output(INTRODUCTION)
     MAX_FUEL_LEVEL = 50
+    MAX_DISTANCE_TRAVELLED = 100
+    MAX_TOFU = 3
 
     # Variables
     done = False
 
-    kms_travelled =  0    # 100 km is the end
-    agents_distance = -20 # 0 is the end
-    turns = 0             #
-    tofu = 3              # 3 is max
-    fuel = MAX_FUEL_LEVEL # Max is 50 L
-    hunger = 0            #
+    kms_travelled =  0        # 100 km is the end
+    agents_distance = -20     # 0 is the end
+    turns = 0                 #
+    tofu = MAX_TOFU           # 3 is max
+    fuel = MAX_FUEL_LEVEL     # Max is 50 L
+    hunger = 0                #
 
 
     # MAIN LOOP
     while not done:
-        pass
-        # TODO: Check if reached END GAME
+        # Random Events
+        # Fido - refills your food (5%)
+        if tofu < 3 and random.random() < 0.05:
+            tofu = MAX_TOFU
+            print()
+            print("******** Yo tofu bag magically full")
+            print("******** \'Yo welcome fool!'\", says a small voice")
+
+
+        # Check if reached END GAME
+        # WIN - Travelled the distance req'd
+        if kms_travelled > MAX_DISTANCE_TRAVELLED:
+            # Print win scenario
+            time.sleep(2)
+            type_text_output(WIN)
+            # Break
+            break
 
         # TODO: Present the user their choices
         print(CHOICES)
@@ -75,6 +121,14 @@ def main():
 
         if user_choice == "a":
             pass
+            if tofu > 0:
+                tofu -=1
+                hunger = 0
+                print("--------- Mmmmmm, good tofu")
+                print("-------- Your hunger is sated")
+            else:
+                print()
+                print("--------You outa food")
             # Eat tofu
 
         elif user_choice == "b":
@@ -93,7 +147,7 @@ def main():
 
             # Feedback
             print()
-            print("zoom")
+            print("--------zoom--------")
             print(f"-------- You traveled {players_distance_now} kms--------")
 
         elif user_choice == "c":
