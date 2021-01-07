@@ -28,6 +28,9 @@ REACH THE END BEFORE THE MAN GON GETCHU.
 
 CHOICES = """
     ---
+    A.
+    B.
+    C. Speed ahead at full throttle
     D. Stop at gas station
     E. Status Check
     Q. QUIT
@@ -70,7 +73,32 @@ def main():
         user_choice = input("What do you want to do? ").lower().strip(",./<>?!")
 
 
-        if user_choice == "d":
+        if user_choice == "c":
+            pass
+            # FAST
+            players_distance_now = random.randrange(10,16)
+            agents_distance_now = random.randrange(7,15)
+
+            # Burn fuel
+            fuel -= random.randrange(5,11)
+
+            # Player distance traveled
+            kms_travelled += players_distance_now
+
+            # Agents_distance_now
+            agents_distance -= players_distance_now - agents_distance_now
+
+            # Player: kms_travelled + players_distance_now
+            # Agents: players_distance_now - agents_distance_now
+
+
+            # Agents distance traveled
+            # Feedback to player
+            print()
+            print("ZOZOOOOOM")
+            print(f"-------- You traveled {players_distance_now} kms--------")
+
+        elif user_choice == "d":
             # Refueling
             # Fill up the fuel tank
             fuel = MAX_FUEL_LEVEL
