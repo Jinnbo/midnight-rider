@@ -28,8 +28,8 @@ REACH THE END BEFORE THE MAN GON GETCHU.
 
 CHOICES = """
     ---
-    A.
-    B.
+    A. Eat tofu
+    B. Moderate speed 
     C. Speed ahead at full throttle
     D. Stop at gas station
     E. Status Check
@@ -73,14 +73,36 @@ def main():
         user_choice = input("What do you want to do? ").lower().strip(",./<>?!")
 
 
-        if user_choice == "c":
+        if user_choice == "a":
             pass
-            # FAST
-            players_distance_now = random.randrange(10,16)
+            # Eat tofu
+
+        elif user_choice == "b":
+            # MODERATE SPEED
+            players_distance_now = random.randrange(7,15)
             agents_distance_now = random.randrange(7,15)
 
             # Burn fuel
-            fuel -= random.randrange(5,11)
+            fuel -= random.randrange(5,8)
+
+            # km traveled
+            kms_travelled += players_distance_now
+
+            # Agents distance now
+            agents_distance -= players_distance_now - agents_distance_now
+
+            # Feedback
+            print()
+            print("zoom")
+            print(f"-------- You traveled {players_distance_now} kms--------")
+
+        elif user_choice == "c":
+            # FAST
+            players_distance_now = random.randrange(10, 16)
+            agents_distance_now = random.randrange(7, 15)
+
+            # Burn fuel
+            fuel -= random.randrange(5, 11)
 
             # Player distance traveled
             kms_travelled += players_distance_now
@@ -88,11 +110,6 @@ def main():
             # Agents_distance_now
             agents_distance -= players_distance_now - agents_distance_now
 
-            # Player: kms_travelled + players_distance_now
-            # Agents: players_distance_now - agents_distance_now
-
-
-            # Agents distance traveled
             # Feedback to player
             print()
             print("ZOZOOOOOM")
