@@ -54,6 +54,73 @@ YOU'VE SEEN IT BEFORE, BUT ONLY ON TV.
 --- GAME OVER---
 """
 
+LOSE_HUNGER = """
+
+:( 
+
+YOU STARVED TO DEATH 
+
+WHY DIDNT YOU EAT SOME TOFU????
+
+...
+
+GAME OVER
+"""
+
+LOSE_AGENTS = """
+
+THE AGENTS HAVE CLOSED IN ON YOU.
+THERE ARE AT LEAST 20 CARS SURROUNDING YOU.
+THE LEAD CAR BUMPS YOUR PASSENGER SIDE.
+YOU MANAGE TO CORRECT YOUR STEERING
+TO KEEP YOU FROM CRASHING.
+
+YOU DIDN'T SEE THE AGENTS CAR BESIDE YOU.
+THE DRIVER BUMPS YOUR CAR.
+AND THAT'S IT.
+
+YOU SPIN UNCONTROLLABLY 
+THE CAR FLIPS OVER AT LEAST TWO TIMES.
+OR MORE... YOU SEEM TO HAVE LOST COUNT.
+
+SIRENS.
+
+"ARE THEY ALIVE?" THEY SAY AS YOU HEAR 
+FOOTSTEPS GETTING CLOSER.
+
+"DOESN'T MATTER. 
+ALL WE WANTED WAS THE CAR.
+
+YOU SEE A DOG SLOWLY STEP OUT OF THE 
+OVERTURNED CAR.
+
+"YOU WILL NEVER STOP THE REVOLUTION,"
+THE DOG SEEMS TO SAY TO THE OFFICERS.
+
+IT WAS IN THE CAR THE WHOLE TIME.
+
+YOU DRIFT OFF INTO UNCSCIOUSNESS.
+
+----GAME OVER----
+
+"""
+
+LOSE_FUEL = """
+YOUR CAR SPUTTERS AND SEEMS TO LET OUT A BIGHT SIGH. 
+THERE'S NO MORE FUEL LEFT.
+
+THE COPS SURROUND YOU AND THEY STEP OUT OF THEIR CARS.
+
+THE LEAD AGENT RIPS THE DOOR OPEN AND THROWS YOU OUT OF THE CAR.
+
+"WE FINALLY GOT IT."
+
+YOU FAILED.
+
+---GAME OVER---
+
+
+"""
 
 CHOICES = """
     ---
@@ -80,12 +147,14 @@ def main():
     MAX_FUEL_LEVEL = 50
     MAX_DISTANCE_TRAVELLED = 100
     MAX_TOFU = 3
+    MAX_HUNGER = 50
+    STARTING_AGENTS_DISTANCE = -20
 
     # Variables
     done = False
 
     kms_travelled =  0        # 100 km is the end
-    agents_distance = -20     # 0 is the end
+    agents_distance = STARTING_AGENTS_DISTANCE     # 0 is the end
     turns = 0                 #
     tofu = MAX_TOFU           # 3 is max
     fuel = MAX_FUEL_LEVEL     # Max is 50 L
@@ -112,6 +181,34 @@ def main():
             # Break
             break
 
+        # LOSE - by hunger > MAX_HUNGER (50)
+        elif hunger > MAX_HUNGER:
+            time.sleep(2)
+            type_text_output(LOSE_HUNGER)
+            break
+
+        # LOSE - agents reached you
+        elif agents_distance >= 0:
+            time.sleep(2)
+            type_text_output(LOSE_AGENTS)
+            break
+
+        # LOSE- fuel runes otu
+        elif fuel <= 0:
+            time.sleep(2)
+            type_text_output(LOSE_FUEL)
+            break
+
+
+
+        # Display hunger
+        if hunger > 40:
+            print("******** Your stomach rumbles. You need to eat something soon.")
+            time.sleep(1)
+        elif hunger > 25:
+            print("******** Yo gonna starve fool")
+            time.sleep(1)
+
         print(CHOICES)
 
 
@@ -132,7 +229,7 @@ def main():
 
         elif user_choice == "b":
             # MODERATE SPEED
-            players_distance_now = random.randrange(7,15)
+            players_distance_now = random.randrange(4,12)
             agents_distance_now = random.randrange(7,15)
 
             # Burn fuel
@@ -195,21 +292,24 @@ def main():
         elif user_choice == "q":
             done = True
 
+        else:
+            print("\tPlease choose a valid choice.")
+
         # HUNGER
 
-        if user_choice not in ["a","e"]:
-            hunger += random.randrange(5, 13)
+        # UP KEEP
+        if user_choice in ["b","c","d"]:
+            hunger += random.randrange(5, 15)
+            turns += 1
 
 
         time.sleep(1.5)
 
 
-        # TODO: Change the environment based on user choice and RNG
-
-        # TODO: Random event generator
 
     # Outro
     print("Thanks for playing! ")
+    print(f"You finished the game in {turns} turns.")
 
 
 if __name__ == "__main__":
